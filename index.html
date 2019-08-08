@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <title>Youflix Instant Video</title>
+        <link rel="icon" type="image/png" href="youflix.ico">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="slider.css">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body data-bind="event: { click: $root.hideMovie }, css: { inscroll: inscroll }">
+        <div class="loading_overlay"><div class="loader"></div></div>
+        <div class="header">
+            <div class="logo"></div>
+            <div class="rightmenu">
+                <div class="search">
+                    <input type="text" placeholder="Search..." data-bind="value: search, valueUpdate: 'afterkeydown', event: { keydown: searchEnterKey }"></input>
+                    <button data-bind="click: addSearchFilter">&#9906;</button>
+                </div>
+                <div class="filters">
+                    <div class="label">Filters:</div>
+                    <!-- ko foreach: filters -->
+                        <div class="filter">
+                            <span class="label" data-bind="text: label"></span>
+                            <div class="delete" title="Delete" data-bind="click: $parent.deleteFilter">&times;</div>
+                        </div>
+                    <!-- /ko -->
+                    <div class="add">
+                        <div class="button">+</div>
+                        <ul class="menu">
+                            <li data-bind="visible: subdivisions().length > 0" class="heading"><span class="label">Go to:</span></li>
+                            <!-- ko foreach: subdivisions -->
+                                <li data-bind="visible: !$data.notselectable, click: $parent.goToFilter">
+                                    <span class="label" data-bind="text: label"></span>
+                                </li>
+                            <!-- /ko -->
+                            <!-- ko foreach: allfilters -->
+                                <li data-bind="css: { 'heading': $data.heading }, visible: $parent.getFilterVisible($data), click: $parent.addFilter">
+                                    <span class="label" data-bind="text: label"></span>
+                                </li>
+                            <!-- /ko -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="sort">
+                    <div data-bind="attr: { title: sort().label, class: 'selected ' +sort().type }, css: { asc: sort().asc, desc: !sort().asc }">
+                        <span class="type"></span>
+                        <span class="dir"></span>
+                    </div>
+                    <ul data-bind="foreach: SORTS">
+                        <li data-bind="click: $parent.setSort, attr: { title: label, class: type}, css: { asc:asc, desc:!asc }">
+                            <span class="type"></span>
+                            <span class="dir"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="body" data-bind="event: { scroll: scrollBody, mousedown: scrollStart, touchstart: touchScrollStart, mouseup: scrollEnd, touchend: scrollEnd }, css: type">
+            <div class="test"></div>
+            <div class="bodywrap">
+                <div class="innerbody" data-bind="css: { loading: inscroll }, style: { height: bodyHeight() + 'px', width: bodyWidth() }">
+                    <!-- ko foreach: movies -->
+                    <div class="movie" data-bind="
+                        style: { 'top': $data.top, 'left': $data.left },
+                        click: $parent.showMovie,
+                        css : { selected: $parent.selectedMovie() && $parent.selectedMovie().id === id, first: $data.first, last: $data.last }
+                    ">
+                        <div class="content">
+                            <div class="front" data-bind="style: { 'background-image': $data.poster ? 'url(\''+ $parent.base_url + $parent.poster_size + poster +'\')' : '' }"></div>
+                            <div class="back" data-bind="with: $parent.selectedMovie()">
+                                <div class="backdrop" data-bind="style: { 'background-image': $data.backdrop && $data.backdrop!=='null' ? 'url(\''+ $root.base_url + $root.backdrop_size + backdrop +'\')' : '' }, click: $data.trailer && $data.trailer !== 'none' ? $root.play : null, css: { 'hastrailer' : $data.trailer && $data.trailer !== 'none'}"></div>
+                                <div class="trailer" data-bind="visible: $data.trailer && $data.trailer !== 'none', click: $root.play">&#9658; Play Trailer</div>
+                                <div class="overview" data-bind="event: { mouseover: $root.contentOver, mouseleave: $root.contentOut }">
+                                    <div class="title">
+                                        <span data-bind="text: $data.title ? $data.title : ''"></span>
+                                        <span data-bind="visible: $data.genres ? $data.genres.indexOf('TV') > -1 : false">(TV)</span>
+                                        <span data-bind="text: $data.release_date ? '('+$data.release_date.substr(0,4)+')' : ''"></span>
+                                    </div>
+                                    <span data-bind="text: $data.overview ? unescape($data.overview) : ''"></span>
+                                </div>
+                                <div class="tv" data-bind="visible: $data.genres ? $data.genres.indexOf('TV') > -1 : false"></div>
+                                <div class="runtime" data-bind="visible: (!$data.genres || $data.genres.indexOf('TV') === -1) && $data.runtime && $data.runtime > 0, text: $data.runtime ? runtime + ' minutes' : ''"></div>
+                                <div class="rating_wrap"><div class="rating" data-bind="style: {'width': ($data.ratingpct ? ratingpct : 0) + '%' }"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <div class="paging" data-bind="visible: type()==='pager'" style="display:none">
+                <a href="#" class="prev" data-bind="visible: page() > 1, click: function(){ page(parseInt(page())-1); }">&#171;</a>
+                <input class="current" data-bind="value: page"></span><span class="of">of</span><span class="total" data-bind="text: (Math.ceil(totalCount()/(ROWS*COLS)))"></span>
+                <a href="#" class="next" data-bind="visible: page() < (Math.ceil(totalCount()/(ROWS*COLS))), click: function(){ page(parseInt(page())+1); }">&#187;</a>
+            </div>
+            <div class="footer" data-bind="visible: (type() === 'slideindex' || type() === 'jit') && movies().length>0" style="display: none">~fin~</div>
+        </div>
+        <div class="separator_wrap" data-bind="visible: type() === 'slideindex'">
+            <ul class="separator" data-bind="foreach: divisions">
+                <li title="Press and hold to select category" data-bind="css: type + label, style: { top: $parent.getTop($index()), height: ((count/$parent.totalCount())*100) + '%' }">
+                    <span data-bind="text: label"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="activeSection_wrap">
+            <div class="activeSection" title="Click to select category" data-bind="visible: $root.divisions().length > 1 && ($root.activeSection() || $root.activeSubSection()), click: $root.clickActiveSubSection, style:{top: $root.scrollTop() + '%' }""><div data-bind="text: $root.activeSubSection() ? $root.activeSubSection().label : $root.activeSection().label"></div></div>
+        </div>
+        <div class="count" data-bind="text: totalCount() + ' videos'"></div>
+        <div class="play" data-bind="css: { visible: play }">
+            <div class="logo"></div>
+            <div class="load"><div class="loader"></div></div>
+            <div class="playtrailer"></div>
+            <div class="close" data-bind="click: function(){ play(false); }">&times;</div>
+        </div>
+        <script src="jquery-2.1.1.min.js"></script>
+        <script src="knockout-3.2.0.js"></script>
+        <script src="sql.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>

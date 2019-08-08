@@ -1,0 +1,727 @@
+html {
+    overflow: hidden;
+}
+body {
+    background: #f3f3f3;
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica Neue;
+    height: 100%;
+    background: linear-gradient(to bottom,  #000000 0%,#45484d 100%); /* W3C */
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+    background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
+    border-bottom: 1px solid #333;
+}
+.footer {
+    text-align: center;
+    font-family: papyrus, fantasy;
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    color: #fff;
+}
+
+.logo {
+    height: 60px;
+    width: 220px;
+    background: top left url('youflix.png');
+    background-size: auto 100%;
+    background-position: left top;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+.body {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: scroll;
+    z-index: 1;
+}
+
+.bodywrap {
+    overflow: hidden;
+    padding-bottom: 128px;
+}
+
+.pager .bodywrap {
+    padding-bottom: 28px;
+}
+
+.innerbody {
+    width: 180px;
+    height: 240px;
+    margin: 40px auto 0 auto;
+    position: relative;
+}
+
+.innerbody.loading:before {
+    content: "";
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    background: top left repeat url('load_full_black.gif');
+}
+
+.movie {
+    width: 154px;
+    height: 231px;   
+    position: absolute;
+}    
+
+.movie .front {
+    cursor: pointer;
+    border: solid 1px #111;
+    border-radius: 3px;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.movie .front:hover {
+    box-shadow: 0 0 10px 5px rgba(255,0,0,0.5);
+}
+
+.movie .back {
+    background: linear-gradient(135deg, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);
+    border: solid 1px #111;
+    border-radius: 3px;
+}
+.movie .overview {
+    padding: 5px;
+    margin: 5px;
+    width: 257px;
+    height: 190px;
+    background: rgba(255,255,255,0.6);
+    color: #000;
+    font-size: 11px;
+    border-radius: 3px;
+    position: absolute;
+    top: 150px;
+    overflow: auto;
+}
+.movie .overview .title {
+    font-size: 12px;
+    font-weight: bold;
+}
+.movie .backdrop {
+    width: 277px;
+    height: 150px;
+    background-size: 100%;
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.4))); 
+}
+.movie .trailer {
+    position: absolute;
+    font-size: 11px;
+    right: 10px;
+    top: 130px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    color: #fff;
+    padding: 2px 6px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+.movie .trailer:hover {
+    opacity: 1.0;
+}
+.movie .tv {
+    background: top left no-repeat url(tv.png);
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    bottom: 6px;
+    left: 8px;
+}
+.movie .runtime {
+    position: absolute;
+    color: #ccc;
+    bottom: 10px;
+    left: 10px;
+    font-size: 12px;
+}
+.movie .rating_wrap {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    height: 18px;
+    width: 90px;
+    background: top left repeat-x url(star.png);
+}
+.movie .rating {
+    position: absolute;
+    height: 18px;
+    width: 0px;
+    background: top left repeat-x url(starred.png);
+}
+
+.movie .backdrop.hastrailer:after {
+    content: '\25B6';
+    font-size: 44px;
+    line-height: 60px;
+    height: 60px;
+    width: 52px;
+    border: 4px solid #fff;
+    color: #ff0000;
+    background: #000;
+    border-radius: 60px;
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: -30px;
+    text-align: center;
+    vertical-align: middle;
+    padding-left: 8px;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 3px #fff;
+    opacity: 0.9;
+}
+
+.count {
+    color: #FFF;
+    background: #000;
+    position: absolute;
+    top: 50px;
+    left: 60px;
+    font-size: 8px;
+    width: 55px;
+}
+
+.filters, .search {
+    position: relative;
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: none;
+    color: #333;
+    background: linear-gradient(135deg, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
+    box-shadow: 0 0 3px 1px rgba(200,200,200,0.5);
+    border: 1px solid #333;
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 0 4px;
+}
+.search input {
+    height: 20px;
+    width: 100px;
+    border: none;
+    background: none;
+    outline: none;
+    display: block;
+    float: left;
+    margin-top: 5px;
+}
+.search button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    transform: rotate(45deg);
+    font-weight: bold;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+}
+.filters > * {
+    display: inline-block;
+}
+.filters .filter, .filters .add .menu li {
+    height: 22px;
+    line-height: 22px;
+    border-radius: 22px;
+    min-width: 22px;
+    text-align: center;
+    position: relative;
+    background: rgba(0,0,0,0.8);
+    color: #FF0000;
+    font-weight: bold;
+    position: relative;
+}
+.filters .filter .label, .filters .add .menu li .label {
+    margin: 0 4px;
+    display: block;
+}
+.filters .filter .delete {
+    display: none;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    height: 14px;
+    width: 14px;
+    line-height: 10px;
+    border: 1px solid #fff;
+    border-radius: 14px;
+    font-size: 18px;
+    background: rgba(255,255,255,0.9);
+    color: #333;
+    cursor: pointer;
+}
+.filters .filter:hover .delete {
+    display: block;
+}
+.filters .add .button {
+    height: 22px;
+    width: 22px;
+    line-height: 18px;
+    border-radius: 22px;
+    font-size: 22px;
+    vertical-align: middle;
+    text-align: center;
+    background: rgba(0,0,0,0.8);
+    color: #FF0000;
+    position: relative;
+    top: 2px;
+    cursor: pointer;
+}
+.filters .add .menu {
+    display: none;
+    position: fixed;
+    min-height: 22px;
+    background: linear-gradient(135deg, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
+    box-shadow: 0 0 3px 1px rgba(200,200,200,0.5);
+    border: 1px solid #333;
+    border-radius: 3px 0px 3px 3px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 6px;
+    right: 60px;
+    z-index: 1;
+    padding: 5px 0px;
+    max-width: 400px;
+    text-align: center;
+    white-space: normal;
+}
+.filters:hover {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.filters:hover .add .menu {
+    display: block;
+}
+.filters:hover .add .button {
+    background: rgba(255,255,255,0.8);
+}
+.filters .add .menu li {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    margin: 0px 4px 4px 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+.filters .add .menu li:hover {
+    background: rgba(255,255,255,0.6);
+}
+.filters .add .menu .heading {
+    clear: both;
+    background: none;
+    color: #333;
+    cursor: default;
+    display: block;
+    border-top: 1px solid rgba(0,0,0,0.2);
+    margin: 0;
+}
+.filters .add .menu .heading:hover {
+    background: none;
+}
+.sort {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: none;
+    color: #333;
+    background: linear-gradient(135deg, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
+    border: 1px solid #333;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 0 3px 1px rgba(200,200,200,0.5);
+}
+
+.sort ul {
+    display: none;
+}
+
+.sort:hover ul {
+    display:block;
+}
+
+.sort ul li, .sort .selected {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sort .selected:hover, .sort ul li:hover {
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+}
+
+.sort .selected:hover .type, .sort ul li:hover .type {
+    background: rgba(255,255,255,0.8);
+}
+
+.sort .selected .type, .sort ul li .type {
+    font-size: 18px;
+    background: rgba(0,0,0,0.8);
+    color: #FF0000;
+    height: 22px;
+    width: 22px;
+    border-radius: 22px;
+    display: inline-block;
+    line-height: 22px;
+    vertical-align: -1px;
+    position: absolute;
+    margin-top: 4px;
+    margin-left: -11px;
+    z-index: 10;
+}
+
+.sort .dir {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.sort .dir:after {
+    position: absolute;
+    left: 0px;
+    font-size: 8px;
+    font-weight: lighter;
+    height: 30px;
+    width: 30px;
+    opacity: 0.9;
+}
+
+.sort .desc .dir:after {
+    content: '\25BC';
+    top: 14px;
+}
+
+.sort .asc .dir:after {
+    content: '\25B2';
+    top: -12px;
+}
+
+.sort .type:after {
+    font-size: 12px;
+    font-family: arial;
+}
+.sort .alpha .type:after {
+    content: 'AZ';
+    position: absolute;
+    left: 3px;
+}
+.sort .alpha.desc .type:after {
+    content: 'ZA';
+    position: absolute;
+    left: 3px;
+}
+.sort .year .type:after {
+    content: '\2220';
+    position: absolute;
+    left: 9px;
+    top: -3px;
+}
+.sort .year .type:before {
+    content: '';
+    position: absolute;
+    border: 2px solid #FF0000;
+    height: 16px;
+    width: 16px;
+    border-radius: 16px;
+    left: 1px;
+    top: 1px;
+}
+.sort .rating .type:after {
+    content: '\2605';
+    position: absolute;
+    left: 5px;
+}
+
+.sort ul {
+    list-style-type: none;
+    background: linear-gradient(135deg, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
+    box-shadow: 0 0 3px 1px rgba(200,200,200,0.5);
+    border-radius: 5px;
+    width: 30px;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+}
+
+.rightmenu {
+    position: absolute;
+    right: 5px;
+    top: 14px;
+}
+.rightmenu > * {
+    float: left;
+    margin-left: 10px;
+}
+
+.paging {
+    position: relative;
+    text-align: center;
+}
+.paging .prev, .paging .next, .paging .current, .paging .total {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: none;
+    color: #333;
+    background: linear-gradient(135deg, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
+    border: 1px solid #333;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 0 3px 1px rgba(200,200,200,0.5);
+}
+.paging .prev, .paging .next {
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    font-size: 22px;
+    line-height: 16px;
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+}
+.paging .of {
+    margin: 0px 4px;
+    font-size: 10px;
+    color: #DFDFDF;
+    text-shadow: 0 0 3px #000000;
+}
+.paging .current, .paging .total {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* flip */
+
+.movie {
+    perspective: 1000;
+}
+
+.movie.selected .front {
+    height: 388px;
+    width: 277px;
+    opacity: 0;
+}
+
+.movie.selected .content {
+    transform: translate(-62px,-32px) rotateY(180deg);
+    height: 388px;
+    width: 277px;
+}
+
+.movie.first.selected .content {
+    transform: translate(0px,-32px) rotateY(180deg);
+    height: 388px;
+    width: 277px;
+}
+
+.movie.last.selected .content {
+    transform: translate(-124px,-32px) rotateY(180deg);
+    height: 388px;
+    width: 277px;
+}
+
+.movie.selected { 
+    z-index: 1000;
+}
+
+.movie, .front, .content {
+    width: 154px;
+    height: 231px;
+}
+
+.back {
+    display: none;
+    height: 388px;
+    width: 277px; 
+}
+
+.movie.selected .back {
+    display: block;
+    box-shadow: 0 0 10px 1px rgba(255,0,0,0.5);
+}
+
+.movie .content {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: relative;
+}
+
+.front, .back {
+    opacity: 1;
+    backface-visibility: hidden;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.6s;
+}
+
+.front {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.play {
+    display: none;
+    opacity: 0.0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: radial-gradient(ellipse at center, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+    z-index: 1000;
+}
+.play.visible {
+    display: block;
+    opacity: 1.0;
+    transition: opacity 1s ease-in-out;
+}
+.play .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -73px;
+}
+.play:hover .close {
+    opacity: 0.6;
+}
+.play .close {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 12px;
+    background: rgba(0,0,0,0.8);
+    opacity: 0.1;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    z-index: 1000;
+    cursor: pointer;
+    text-align: center;
+}
+.play .close:hover {
+    opacity: 1.0;
+}
+
+.play .load {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -120px;
+    height: 240px;
+    width: 240px;
+}
+
+.play .playtrailer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    opacity: 0.0;
+    transition: opacity 1s ease-in-out;
+}
+
+.play .playtrailer.visible {
+    display: block;
+    opacity: 1.0;
+    transition: opacity 1s ease-in-out;
+}
+.loading_overlay{
+    background: #222 center 40% no-repeat url('youflix.png');
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    border: none;
+    z-index: 100;
+}
+.loader:before,
+.loader:after,
+.loader {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load 1.8s infinite ease-in-out;
+  animation: load 1.8s infinite ease-in-out;
+}
+.loader {
+  margin: 8em auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation-delay: 0.16s;
+  animation-delay: 0.16s;
+}
+.loader:before {
+  left: -3.5em;
+}
+.loader:after {
+  left: 3.5em;
+  -webkit-animation-delay: 0.32s;
+  animation-delay: 0.32s;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.loading_overlay .loader {
+    top: 50%;
+}
+@-webkit-keyframes load {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em #FF0000;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0 #FF0000;
+  }
+}
+@keyframes load {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em #FF0000;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0 #CC0000;
+  }
+}
