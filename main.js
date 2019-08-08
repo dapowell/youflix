@@ -83,11 +83,10 @@ var FILTERS = [
     {label: "2000's", type: "year"},
     {label: "1990's", type: "year"},
     {label: "1980's", type: "year"},
-    {label: "1970's-", type: "year"},
-    {label: "2017+", type: "subyear", parent: "2010's"}
+    {label: "1970's-", type: "year"}
 ];
 
-for(var y = 2018; y = y-1;){
+for(var y = 2020; y = y-1;){
     if(y<=1979){
         break;
     }
